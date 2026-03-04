@@ -902,28 +902,29 @@ fn_repeat:                          ; subroutine: asks user if they want to draw
     pop   edx                       ; restore EDX
     pop   ecx                       ; restore ECX
     pop   ebx                       ; restore EBX
-    ret                             ; return to caller; AL holds 1 (yes) or 0 (no)
+    ret                             ; it will return to caller; AL holds 1 (yes) or 0 (no)
 
 ; ============================================================
 ; SUBROUTINE: fn_read
 ;   sys_read(stdin, v_ibuf, 4)
 ;   Reads up to 4 bytes from stdin into v_ibuf.
-;   All registers preserved.
+;   All registers preserved here.
 ; ============================================================
-fn_read:                            ; subroutine: reads up to 4 bytes of keyboard input from the user
-    push  eax                       ; preserve EAX (will be overwritten by sys_read)
-    push  ebx                       ; preserve EBX
-    push  ecx                       ; preserve ECX
-    push  edx                       ; preserve EDX
+fn_read:                            ; it will subroutine: reads up to 4 bytes of keyboard input from the user
+    push  eax                       ; this preserve EAX (will be overwritten by sys_read)
+    push  ebx                       ; this preserve EBX
+    push  ecx                       ; it preserve ECX
+    push  edx                       ; this preserve EDX
 
-    mov   eax, 3                    ; eax=3 = sys_read (Linux 32-bit system call number for reading input)
-    mov   ebx, 0                    ; ebx=0 = file descriptor 0 = stdin (keyboard input)
-    mov   ecx, v_ibuf               ; ecx = address of v_ibuf buffer where the input bytes will be stored
-    mov   edx, 4                    ; edx=4 = maximum number of bytes to read (1 char + newline + possible CR + null)
-    int   0x80                      ; trigger the Linux kernel system call; typed characters are stored in v_ibuf
+    mov   eax, 3                    ; so , eax=3 = sys_read (Linux 32-bit system call number for reading input)
+    mov   ebx, 0                    ; this  ebx=0 = file descriptor 0 = stdin (keyboard input)
+    mov   ecx, v_ibuf               ; it will , ecx = address of v_ibuf buffer where the input bytes will be stored
+    mov   edx, 4                    ; so , edx=4 = maximum number of bytes to read (1 char + newline + possible CR + null)
+    int   0x80                      ; it will trigger the Linux kernel system call; typed characters are stored in v_ibuf
 
-    pop   edx                       ; restore EDX
-    pop   ecx                       ; restore ECX
-    pop   ebx                       ; restore EBX
-    pop   eax                       ; restore EAX
+    pop   edx                       ; restore  the EDX
+    pop   ecx                       ; will restore the ECX
+    pop   ebx                       ; restores the EBX
+    pop   eax                       ; it restore the EAX
     ret                             ; return to caller; v_ibuf now contains what the user typed
+
