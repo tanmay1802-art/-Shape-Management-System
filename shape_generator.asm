@@ -37,19 +37,19 @@ section .data                       ; This section holds variables that are INIT
     s_menu      db 10,"============================================",10     ; 'db' = define byte(s); ASCII 10 = newline char; defines the menu banner string
                 db "        SHAPE GENERATOR  (NASM x86)        ",10        ; second line of the banner
                 db "============================================",10        ; divider line
-                db "  1. Circle                                 ",10        ; menu option 1
-                db "  2. Square                                 ",10        ; menu option 2
-                db "  3. Rectangle                              ",10        ; menu option 3
+                db "  1. Circle                                 ",10        ; this is menu option 1
+                db "  2. Square                                 ",10        ; this is menu option 2
+                db "  3. Rectangle                              ",10        ; this is menu option 3
                 db "  4. Triangle  (Isosceles)                  ",10        ; menu option 4
                 db "  5. Diamond                                ",10        ; menu option 5
                 db "  6. Quit                                   ",10        ; menu option 6 (exit)
-                db "============================================",10        ; closing divider
+                db "============================================",10        ; closing divider/ dash  use for underline
                 db "  Your choice: "                                        ; prompt line (no newline - cursor stays on same line)
     s_menu_len  equ $ - s_menu                                             ; 'equ' = equate (constant); '$' = current address; subtract start = total byte length of s_menu
 
     ; ---------- Sub-menus ----------
-    s_color     db 10,"  Color  : 1=Red  2=Green  3=Blue : "               ; prompt asking user to pick a color
-    s_color_len equ $ - s_color                                            ; length of the color prompt string in bytes
+    s_color     db 10,"  Color  : 1=Red  2=Green  3=Blue : "               ; prompt asking user to pick a color here
+    s_color_len equ $ - s_color                                            ; length of the color prompt string in bytes 
 
     s_mode      db 10,"  Mode   : 1=Filled  2=Hollow    : "                ; prompt asking user to pick filled or hollow mode
     s_mode_len  equ $ - s_mode                                             ; length of the mode prompt string in bytes
@@ -63,22 +63,22 @@ section .data                       ; This section holds variables that are INIT
     s_width     db 10,"  Width  (3-9) : "                                  ; prompt asking user to enter width (for rectangle)
     s_width_len equ $ - s_width                                            ; length of the width prompt in bytes
 
-    s_height    db 10,"  Height (3-9) : "                                  ; prompt asking user to enter height (for rectangle)
+    s_height    db 10,"  Height (3-9) : "                                  ; here prompt asking user to enter height (for rectangle)
     s_hgt_len   equ $ - s_height                                           ; length of the height prompt in bytes
 
-    s_again     db 10,"  Draw again? (y/n) : "                             ; prompt asking if the user wants to redraw the same shape
-    s_again_len equ $ - s_again                                            ; length of the repeat prompt in bytes
+    s_again     db 10,"  Draw again? (y/n) : "                             ; here prompt asking if the user wants to redraw the same shape
+    s_again_len equ $ - s_again                                            ;it is  length of the repeat prompt in bytes
 
     ; ---------- System characters ----------
-    c_nl        db 10           ; define 1 byte: ASCII 10 = newline character '\n' (moves cursor to next line)
-    c_sp        db 32           ; define 1 byte: ASCII 32 = space character ' ' (used for padding/alignment)
+    c_nl        db 10           ; it will define 1 byte: ASCII 10 = newline character '\n' (moves cursor to next line)
+    c_sp        db 32           ; this define 1 byte: ASCII 32 = space character ' ' (used for padding/alignment)
 
     ; ---------- Messages ----------
-    s_bye       db 10,"  Goodbye! Thank you.",10,10                        ; farewell message printed on program exit (two newlines for spacing)
-    s_bye_len   equ $ - s_bye                                             ; length of the bye message in bytes
+    s_bye       db 10,"  Goodbye! Thank you.",10,10                        ; this farewell message printed on program exit (two newlines for spacing)
+    s_bye_len   equ $ - s_bye                                             ; the length of the bye message in bytes
 
-    s_err       db 10,"  [!] Invalid input. Please try again.",10          ; error message shown when user types an unexpected value
-    s_err_len   equ $ - s_err                                             ; length of the error message in bytes
+    s_err       db 10,"  [!] Invalid input. Please try again.",10          ; it will show error message shown when user types an unexpected value
+    s_err_len   equ $ - s_err                                             ; the length of the error message in bytes
 
     ; ---------- ANSI Color Escape Codes ----------
     ; Format: ESC [ color_code m
