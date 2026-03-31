@@ -48,10 +48,10 @@ section .data                       ; This section holds variables that are INIT
     s_menu_len  equ $ - s_menu                                             ; 'equ' = equate (constant); '$' = current address; subtract start = total byte length of s_menu
 
     ; ---------- Sub-menus ----------
-    s_color     db 10,"  Color  : 1=Red  2=Green  3=Blue : "               ; prompt asking user to pick a color here
-    s_color_len equ $ - s_color                                            ; length of the color prompt string in bytes 
+    s_color     db 10,"  Color  : 1=Red  2=Green  3=Blue : "               ;the prompt asking user to pick a color here
+    s_color_len equ $ - s_color                                            ; now length of the color prompt string in bytes 
 
-    s_mode      db 10,"  Mode   : 1=Filled  2=Hollow    : "                ; prompt asking user to pick filled or hollow mode
+    s_mode      db 10,"  Mode   : 1=Filled  2=Hollow    : "                ; this prompt asking user to pick filled or hollow mode
     s_mode_len  equ $ - s_mode                                             ; length of the mode prompt string in bytes
 
     s_char      db 10,"  Draw char (press Enter for *) : "                 ; prompt asking user to type a custom character
@@ -101,10 +101,10 @@ section .data                       ; This section holds variables that are INIT
 section .bss                        ; BSS = Block Started by Symbol; holds variables with NO initial value (filled with zeros at runtime)
 
     v_ibuf      resb 4      ; 'resb 4' = reserve 4 bytes; input buffer to hold keypress + newline from the user
-    v_color     resb 1      ; reserve 1 byte: stores chosen color (1=Red, 2=Green, 3=Blue)
-    v_mode      resb 1      ; reserve 1 byte: stores draw mode (1=Filled, 2=Hollow)
-    v_dchar     resb 1      ; reserve 1 byte: stores the draw character (user-picked or default '*')
-    v_sw        resb 1      ; reserve 1 byte: stores shape width, radius, or general size (single-dimension)
+    v_color     resb 1      ;it will reserve 1 byte: stores chosen color (1=Red, 2=Green, 3=Blue)
+    v_mode      resb 1      ; this also reserve 1 byte: stores draw mode (1=Filled, 2=Hollow)
+    v_dchar     resb 1      ; it will reserve 1 byte: stores the draw character (user-picked or default '*')
+    v_sw        resb 1      ; this reserve 1 byte: stores shape width, radius, or general size (single-dimension)
     v_sh        resb 1      ; reserve 1 byte: stores shape height (only used for rectangle where height != width)
     v_sc        resw 1      ; 'resw 1' = reserve 1 word (2 bytes): star/char count per row; word size avoids ECX register conflict with sys_write
 
@@ -201,20 +201,20 @@ shape_circle:                       ; entry point for drawing a circle
     movzx esi, byte [v_sw]          ; movzx = move with zero-extension; load radius r from v_sw into full 32-bit ESI (upper bits cleared to 0)
 
     ; start outer loop: y = -r
-    mov   ebp, esi                  ; copy r into EBP
+    mov   ebp, esi                  ;it will copy r into EBP 
     neg   ebp                       ; negate EBP so EBP = -r (starting value for y in the outer loop)
 
-.row:                               ; local label for the outer (row / y) loop
+.row:                               ;this is the local label for the outer (row / y) loop
     ; start inner loop: x = -r
-    mov   edi, esi                  ; copy r into EDI
+    mov   edi, esi                  ; copy r into EDI !!!
     neg   edi                       ; negate EDI so EDI = -r (starting value for x in the inner loop)
 
 .col:                               ; local label for the inner (column / x) loop
     ; compute x^2 + y^2
-    mov   eax, edi                  ; load current x value into EAX
+    mov   eax, edi                  ; load current x value into EAX,,,,..
     imul  eax, eax                  ; signed multiply EAX by itself: EAX = x^2
     mov   ecx, ebp                  ; load current y value into ECX
-    imul  ecx, ecx                  ; ECX = y^2
+    imul  ecx, ecx                  ; ECX = y^2 ,,ok?
     add   eax, ecx                  ; EAX = x^2 + y^2 (distance squared from center)
 
     ; compute r^2
