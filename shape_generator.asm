@@ -40,7 +40,7 @@ section .data                       ; This section holds variables that are INIT
                 db "  1. Circle                                 ",10        ; this is menu option 1
                 db "  2. Square                                 ",10        ; this is menu option 2
                 db "  3. Rectangle                              ",10        ; this is menu option 3
-                db "  4. Triangle  (Isosceles)                  ",10        ; menu option 4
+                db "  4. Triangle  (Isosceles)                  ",10        ; now menu option 4
                 db "  5. Diamond                                ",10        ; menu option 5
                 db "  6. Quit                                   ",10        ; menu option 6 (exit)
                 db "============================================",10        ; closing divider/ dash  use for underline
@@ -101,11 +101,11 @@ section .data                       ; This section holds variables that are INIT
 section .bss                        ; BSS = Block Started by Symbol; holds variables with NO initial value (filled with zeros at runtime)
 
     v_ibuf      resb 4      ; 'resb 4' = reserve 4 bytes; input buffer to hold keypress + newline from the user
-    v_color     resb 1      ;it will reserve 1 byte: stores chosen color (1=Red, 2=Green, 3=Blue)
-    v_mode      resb 1      ; this also reserve 1 byte: stores draw mode (1=Filled, 2=Hollow)
+    v_color     resb 1      ;it will reserve 1 byte: stores chosen color (1=Red, 2=Green, 3=Blue) ....ok??
+    v_mode      resb 1      ; this also reserve 1 byte: stores draw mode (1=Filled, 2=Hollow)......yes, okay
     v_dchar     resb 1      ; it will reserve 1 byte: stores the draw character (user-picked or default '*')
     v_sw        resb 1      ; this reserve 1 byte: stores shape width, radius, or general size (single-dimension)
-    v_sh        resb 1      ; reserve 1 byte: stores shape height (only used for rectangle where height != width)
+    v_sh        resb 1      ;it  reserve 1 byte: stores shape height (only used for rectangle where height != width)
     v_sc        resw 1      ; 'resw 1' = reserve 1 word (2 bytes): star/char count per row; word size avoids ECX register conflict with sys_write
 
 ; ============================================================
@@ -114,7 +114,7 @@ section .bss                        ; BSS = Block Started by Symbol; holds varia
 
 ; sys_write(stdout, addr, len)
 %macro PRINT 2              ; define a macro named PRINT that takes 2 arguments: address (%1) and length (%2)
-    mov eax, 4              ; eax=4 means sys_write (Linux 32-bit system call number)
+    mov eax, 4              ; this is eax=4 means sys_write (Linux 32-bit system call number)
     mov ebx, 1              ; ebx=1 means file descriptor 1 = stdout (the terminal screen)
     mov ecx, %1             ; ecx = address of the string/data to print (first macro argument)
     mov edx, %2             ; edx = number of bytes to write (second macro argument)
@@ -127,8 +127,8 @@ section .bss                        ; BSS = Block Started by Symbol; holds varia
     mov ebx, 1              ; ebx=1 = stdout
     mov ecx, %1             ; ecx = address of the single character to print
     mov edx, 1              ; edx=1 = write exactly 1 byte
-    int 0x80                ; trigger the system call
-%endmacro                   ; end of macro definition
+    int 0x80                ; it triggers the system call
+%endmacro                   ;this end of macro definition
 
 ; ============================================================
 ; TEXT SECTION - program logic
@@ -146,13 +146,13 @@ main_loop:                  ; label for the main menu loop; we jump back here af
     call  fn_read               ; call subroutine fn_read to read the user's menu choice into v_ibuf
 
     cmp   byte [v_ibuf], '1'    ; compare the first byte of v_ibuf with ASCII '1' (choice 1 = Circle)
-    je    shape_circle          ; if equal (je = jump if equal), jump to shape_circle handler
-    cmp   byte [v_ibuf], '2'    ; compare with '2' (choice 2 = Square)
+    je    shape_circle          ; if equal (je = jump if equal), jump to shape_circle handler....is it alright?
+    cmp   byte [v_ibuf], '2'    ; compare with '2' (choice 2 = Square).......this is okay
     je    shape_square          ; jump to shape_square if user pressed 2
     cmp   byte [v_ibuf], '3'    ; compare with '3' (choice 3 = Rectangle)
-    je    shape_rect            ; jump to shape_rect if user pressed 3
-    cmp   byte [v_ibuf], '4'    ; compare with '4' (choice 4 = Triangle)
-    je    shape_tri             ; jump to shape_tri if user pressed 4
+    je    shape_rect            ; jump to shape_rect if user pressed 3.....this is how we use je
+    cmp   byte [v_ibuf], '4'    ; compare with '4' (choice 4 = Triangle)   ..for comparison purpose
+    je    shape_tri             ; jump to shape_tri if user pressed 4    ..nice
     cmp   byte [v_ibuf], '5'    ; compare with '5' (choice 5 = Diamond)
     je    shape_diamond         ; jump to shape_diamond if user pressed 5
     cmp   byte [v_ibuf], '6'    ; compare with '6' (choice 6 = Quit)
