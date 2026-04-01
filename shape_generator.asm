@@ -1,5 +1,5 @@
 ; ============================================================
-; PROGRAM      : Shape Generator with Color
+; PROGRAM      : Shape Generator with Color          (Tanmay Sarkar Emon)
 ; FILE         : main.asm
 ; LANGUAGE     : NASM x86 Assembly (32-bit, Linux)
 ;
@@ -38,7 +38,7 @@ section .data                       ; This section holds variables that are INIT
                 db "        SHAPE GENERATOR  (NASM x86)        ",10        ; second line of the banner
                 db "============================================",10        ; divider line
                 db "  1. Circle                                 ",10        ; this is menu option 1
-                db "  2. Square                                 ",10        ; this is menu option 2
+                db "  2. Square (Tanmay Sarkar Emon)            ",10       ; this is menu option 2
                 db "  3. Rectangle                              ",10        ; this is menu option 3
                 db "  4. Triangle  (Isosceles)                  ",10        ; now menu option 4
                 db "  5. Diamond                                ",10        ; menu option 5
@@ -90,17 +90,17 @@ section .data                       ; This section holds variables that are INIT
     a_grn_len   equ $ - a_green   ; length of the green escape sequence in bytes
 
     a_blue      db 27,"[34m"       ; ESC + "[34m" = ANSI code for BLUE text color
-    a_blu_len   equ $ - a_blue    ; length of the blue escape sequence in bytes
+    a_blu_len   equ $ - a_blue    ; now , length of the blue escape sequence in bytes
 
     a_reset     db 27,"[0m"        ; ESC + "[0m" = ANSI reset: turns off all color/formatting, restores terminal default
-    a_rst_len   equ $ - a_reset   ; length of the reset escape sequence in bytes
+    a_rst_len   equ $ - a_reset   ; this is the length of the reset escape sequence in bytes
 
 ; ============================================================
 ; BSS SECTION - uninitialized variables (runtime storage)
 ; ============================================================
 section .bss                        ; BSS = Block Started by Symbol; holds variables with NO initial value (filled with zeros at runtime)
 
-    v_ibuf      resb 4      ; 'resb 4' = reserve 4 bytes; input buffer to hold keypress + newline from the user
+    v_ibuf      resb 4      ; now, 'resb 4' = reserve 4 bytes; input buffer to hold keypress + newline from the user
     v_color     resb 1      ;it will reserve 1 byte: stores chosen color (1=Red, 2=Green, 3=Blue) ....ok??
     v_mode      resb 1      ; this also reserve 1 byte: stores draw mode (1=Filled, 2=Hollow)......yes, okay
     v_dchar     resb 1      ; it will reserve 1 byte: stores the draw character (user-picked or default '*')
@@ -153,7 +153,7 @@ main_loop:                  ; label for the main menu loop; we jump back here af
     je    shape_rect            ; jump to shape_rect if user pressed 3.....this is how we use je
     cmp   byte [v_ibuf], '4'    ; compare with '4' (choice 4 = Triangle)   ..for comparison purpose
     je    shape_tri             ; jump to shape_tri if user pressed 4    ..nice
-    cmp   byte [v_ibuf], '5'    ; compare with '5' (choice 5 = Diamond)
+    cmp   byte [v_ibuf], '5'    ; compare with '5' (choice 5 = Diamond) ,it compares
     je    shape_diamond         ; jump to shape_diamond if user pressed 5
     cmp   byte [v_ibuf], '6'    ; compare with '6' (choice 6 = Quit)
     je    prog_quit             ; jump to prog_quit if user pressed 6
